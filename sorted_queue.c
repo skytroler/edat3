@@ -4,12 +4,6 @@
 #include "sorted_queue.h"
 #define MAX_QUEUE 8
 
-struct Queue{
-    void *data[MAX_QUEUE];
-    int front;
-    int rear;
-};
-
 SortedQueue *squeue_new(){
     
     SortedQueue *p = queue_new();
