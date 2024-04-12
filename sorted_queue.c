@@ -31,7 +31,7 @@ bool squeue_isEmpty(const SortedQueue *q){
 }
 
 Status squeue_push(SortedQueue *q, void *elem, compare_elem_fn cmp){
-    if (queue_is_full(q)) {
+    if (!q) {
         return ERROR;
     }
 
