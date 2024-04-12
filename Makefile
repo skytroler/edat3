@@ -1,34 +1,43 @@
-CFLAGS = -Wall -ggdb
-CC = gcc
-IFLAGS = -I./
-LDFLAGS = -L./
-CLIB = -lstack -L.
-LIBS = -lm
+CFLAGS = -Wall -pedantic -ansi -g
+CC=gcc
+CLIB=-L -lqueue
+LIBS= -lm
+EXES= p3_e1 p3_e2 p3_e3
+OBJS= maze.o p3_e1.o p3_e2.o p3_e3.o
 
-all: p2_e1 p2_e2 p2_e3
+
+
+
+all: $(EXES)
 
 #######################################################
 
-p2_e1: p2_e1.o maze.o stack.o libstack.a
+p3_e1: p3_e1.o maze.o elements.o sorted_queue.o queue.h libqueue.a
+	$(CC) -o $@ $^ 
+
+p3_e1.o: p3_e1.c elements.h maze.h
+	$(CC) $(CFLAGS) -c $<
+
+p3_e2: p3_e2.o maze.o search.o types.h queue.h libqueue.a
 	$(CC) -o $@ $^ $(CLIB) $(LIBS)
 
-p2_e1.o: p2_e1.c stack.h maze.h
-	$(CC) $(CFLAGS) $(IFLAGS) -c $<
+p3_e2.o: p3_e2.c types.h maze.h queue.h
+	$(CC) $(CFLAGS) -c $<
 
-p2_e2: p2_e2.o stack.o maze.o libstack.a
-	$(CC) -o $@ $^ $(CLIB) $(LIBS)
+maze.o: maze.c maze.h types.h
+	$(CC) $(CFLAGS) -c $<
 
-p2_e2.o: p2_e2.c stack.h maze.h
-	$(CC) $(CFLAGS) $(IFLAGS) -c $<
+search.o: search.c maze.h types.h queue.h
+	$(CC) $(CFLAGS) -c $<
 
-p2_e3: p2_e3.o stack.o maze.o search.o libstack.a
-	$(CC) -o $@ $^ $(CLIB) $(LIBS)
+elements.o: elements.c maze.h types.h elements.h
+	$(CC) $(CFLAGS) -c $<
 
-p2_e3.o: p2_e3.c stack.h maze.h search.h
-	$(CC) $(CFLAGS) $(IFLAGS) -c $<
+sorted_queue.o: sorted_queue.c elements.h types.h sorted_queue.h queue.h
+	$(CC) $(CFLAGS) -c $<
 
-search.o: search.c search.h maze.h stack.h
-	$(CC) $(CFLAGS) $(IFLAGS) -c $<
+queue.o: queue_list.c elements.h types.h queue.h list.h
+	$(CC) $(CFLAGS) -c $<
 
 #######################################################
 
@@ -38,8 +47,7 @@ clean_objects:
 
 clean_program:
 	@echo "Cleaning program..."
-	@rm -f p2_e1
-	@rm -f p2_e2
-	@rm -f p2_e3
-
+	@rm -f $(EXES)
+	
+	
 clean: clean_objects clean_program
