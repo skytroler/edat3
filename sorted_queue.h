@@ -9,9 +9,6 @@
 
 typedef Queue SortedQueue;
 
-// typedef int (*print_elem_fn)(FILE *, const void *);
-// typedef int (*compare_elem_fn)(const void *, const void *);
-
 SortedQueue *squeue_new();
 void squeue_free(SortedQueue *q);
 bool squeue_isEmpty(const SortedQueue *q);

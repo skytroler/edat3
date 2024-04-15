@@ -35,7 +35,7 @@ typedef enum {
   UP = 1,
   LEFT = 2,
   DOWN = 3,
-  STAY = 4,
+  STAY = 4
 } direction;
 
 /*************************************************************************
@@ -134,8 +134,8 @@ Status point_setY(Point *p, int y);
  */
 Status point_setSymbol(Point *p, char c);
 
-bool point_getVisited(const Point *p);       // DFS (P2)
-Status point_setVisited(Point *p, bool bol); // DFS (P2)
+bool point_getVisited(const Point *p);
+Status point_setVisited(Point *p, bool bol);
 
 /**
  * @brief Reserves memory for a point where it copies the data from

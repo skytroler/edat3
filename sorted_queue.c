@@ -35,14 +35,14 @@ Status squeue_push(SortedQueue *q, void *elem, compare_elem_fn cmp){
         return ERROR;
     }
 
-    while (!queue_isEmpty(q) && cmp(queue_get_front(q), elem) < 0) {
+    while (!queue_isEmpty(q) && cmp(queue_getFront(q), elem) < 0) {
         void *front_elem = queue_pop(q);
         queue_push(q, front_elem);
     }
 
     queue_push(q, elem);
     
-    while (!queue_isEmpty(q) && cmp(queue_get_front(q), elem) >= 0) {
+    while (!queue_isEmpty(q) && cmp(queue_getFront(q), elem) >= 0) {
         void *front_elem = queue_pop(q);
         queue_push(q, front_elem);
     }

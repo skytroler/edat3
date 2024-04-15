@@ -8,7 +8,7 @@
 struct _Point {
  int x, y;
  char symbol;
- bool visited; // for DFS
+ bool visited;
 };
 
 struct _Maze {
@@ -128,12 +128,15 @@ Point *point_hardcpy(const Point *src){
 }
 
 bool point_equal(const void *p1, const void *p2){
+    const Point* a;
+    const Point* b;
+
     if(!p1||!p2){
         return ERROR;
     }
-
-    const Point* a = (const Point*)p1;
-    const Point* b = (const Point*)p2;
+        
+    a = (const Point*)p1;
+    b = (const Point*)p2;
     if((point_getX(a)==point_getX(b))&&(point_getY(a)==point_getY(b))&&(point_getSymbol(a)==point_getSymbol(b))&&(point_getVisited(a)==point_getVisited(b))){
         return true;
     }
@@ -141,12 +144,14 @@ bool point_equal(const void *p1, const void *p2){
 }
 
 int point_print(FILE *pf, const void *p){
-    const Point* a = (const Point*)p;
+    const Point* a;
+    int num_printed;
+    a = (const Point*)p;
     if (p==NULL)
     {
         return 0;
     }
-    int num_printed = 0;
+    num_printed = 0;
 
     num_printed = fprintf(pf, "[(%d, %d): %c]", a->x, a->y, a->symbol);
 
@@ -352,13 +357,14 @@ Status maze_checkCoordinates(const Maze *maze, int x, int y){
 
 
 int maze_printPoints(FILE *fp, const Maze *maze){
+    int i, j;
     if (maze==NULL)
     {
         return ERROR;
     }
-    for (int i = 0; i < maze_getNrows(maze); i++)
+    for ( i = 0; i < maze_getNrows(maze); i++)
     {
-        for (int j = 0; j < maze_getNcols(maze); j++)
+        for ( j = 0; j < maze_getNcols(maze); j++)
         {
             point_print(fp, maze_getPoint(maze, i, j));
         }
@@ -369,13 +375,14 @@ int maze_printPoints(FILE *fp, const Maze *maze){
 }
 
 int maze_print(FILE *fp, const Maze *maze){
+    int i, j;
     if (maze==NULL)
     {
         return ERROR;
     }
-    for (int i = 0; i < maze_getNrows(maze); i++)
+    for ( i = 0; i < maze_getNrows(maze); i++)
     {
-        for (int j = 0; j < maze_getNcols(maze); j++)
+        for ( j = 0; j < maze_getNcols(maze); j++)
         {   
             if(point_getSymbol(maze_getPoint(maze, i, j))==IN||point_getSymbol(maze_getPoint(maze, i, j))==OUT){
                 point_print(fp, maze_getPoint(maze, i, j));
@@ -384,9 +391,9 @@ int maze_print(FILE *fp, const Maze *maze){
         }
         
     }
-    for (int i = 0; i < maze_getNrows(maze); i++)
+    for ( i = 0; i < maze_getNrows(maze); i++)
     {
-        for (int j = 0; j < maze_getNcols(maze); j++)
+        for ( j = 0; j < maze_getNcols(maze); j++)
         {
             fprintf(fp, "%c", point_getSymbol(maze_getPoint(maze, i, j)));
         }
@@ -399,6 +406,7 @@ Maze *maze_readFromFile(const char *filename){
     FILE *f;
     Maze *m;
     int nrows, ncols;
+    int i, j;
     char sym;
     
     if((f=fopen(filename, "r"))==NULL){
@@ -409,9 +417,9 @@ Maze *maze_readFromFile(const char *filename){
         fclose(f);
         return NULL;
     }
-    for (int i = 0; i < nrows; i++)
+    for ( i = 0; i < nrows; i++)
     {
-        for (int j = 0; j < ncols; j++)
+        for ( j = 0; j < ncols; j++)
         {
             fscanf(f, "\n%c", &sym);
             maze_setSymbol(m, i, j, sym);
