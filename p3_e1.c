@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "sorted_queue.h"
 #include "maze.h"
+
 
 int int_cmp(const void *a, const void *b) {
     int ia = *(const int*)a;
@@ -15,20 +17,26 @@ int point_cmp(const void *p1, const void *p2) {
     const Point *point2 = (const Point *)p2;
 
     double raiz1 = sqrt(pow(point_getX(point1), 2) + pow(point_getY(point1), 2));
-
     double raiz2 = sqrt(pow(point_getX(point2), 2) + pow(point_getY(point2), 2));
 
-    if(raiz1 < raiz2){
+    if(raiz1 < raiz2) {
         return -1;
-        else if(raiz2 < raiz1)
-        return -1;
-    } else{
-        char symbol
+    } else if(raiz1 > raiz2) {
+        return 1;
+    } else {
+        char symbol1 = point_getSymbol(point1);
+        char symbol2 = point_getSymbol(point2);
+
+        if (symbol1 < symbol2) {
+            return -1;
+        } else if (symbol1 > symbol2) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-
-
-    
 }
+
 
 int string_cmp(const void *s1, const void *s2) {
     return strcmp((char *)s1, (char *)s2);

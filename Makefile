@@ -2,8 +2,8 @@ CFLAGS = -Wall -pedantic -ansi -g
 CC=gcc
 CLIB=-L -lqueue
 LIBS= -lm
-EXES= p3_e1 
-OBJS= maze.o p3_e1.o 
+EXES= p3_e1 p3_e2 
+OBJS= maze.o p3_e1.o p3_e2.o p3_e3.o
 
 
 
@@ -13,9 +13,15 @@ all: $(EXES)
 #######################################################
 
 p3_e1: p3_e1.o maze.o elements.o sorted_queue.o queue.h libqueue.a
-	$(CC) -o $@ $^ 
+	$(CC) -o $@ $^ $(CLIB) $(LIBS)
 
 p3_e1.o: p3_e1.c elements.h maze.h
+	$(CC) $(CFLAGS) -c $<
+
+p3_e2: p3_e2.o maze.o search.o types.h queue.h search.h libqueue.a libstack.a
+	$(CC) -o $@ $^ $(CLIB) $(LIBS)
+
+p3_e2.o: p3_e2.c types.h maze.h queue.h search.h
 	$(CC) $(CFLAGS) -c $<
 
 maze.o: maze.c maze.h types.h
