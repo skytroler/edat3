@@ -8,30 +8,6 @@
 typedef int (*print_elem_fn)(FILE *, const void *elem);
 
 /* function type to compare two elements */
-/*
- * This function type matches the requirement for the compare argument of the
- * standard library function qsort
- *
- * In C, the convention (for qsort but also for any other place where an
- * ordering among elements needs to be defined) is that, for a given way to
- * order elements, this function should return:
- *
- *  - a negative value if the first argument should be ordered *before* the
- * second,
- *  - a positive value if the first argument should be ordered *after* the
- * second,
- *  - 0 if both arguments are indistinguishable according to the order
- *
- * Thus for example, to sort integers in ascending order, the function may
- * simply return (int *)elem1 - (int*) elem2; similarly, to sort strings in
- * ascending order, you can return the result of strcmp applied to the
- * appropriatetly casted arguments.
- *
- * On the other hand, to use descending order, you'll need to define separate
- * functions, these functions may simply change the sign of the value returned
- * in the previous examples
- */
-
 typedef int (*compare_elem_fn)(const void *elem1, const void *elem2);
 
 /* ADD ADDITIONAL FUNCTION TYPES HERE AS NEEDED */
@@ -50,4 +26,10 @@ typedef void (*process_elem_fn)(const void *element);
 /* PROTOTYPES FOR SPECIFIC FUNCTIONS OF THESE TYPES*/
 int int_print(FILE *pf, const void *a);
 int char_print(FILE *pf, const void *a);
+int string_print(FILE *pf, const void *s);
+int int_cmp(const void *elem1, const void *elem2);
+int point_cmp(const void *p1, const void *p2);
+int string_cmp(const void *s1, const void *s2);
+int char_cmp(const void *c1, const void *c2);
+
 #endif

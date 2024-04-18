@@ -1,94 +1,79 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "sorted_queue.h"
-#define MAX_QUEUE 8
+#include "elements.h"
+#include "types.h"
+#include "maze.h"
 
-SortedQueue *squeue_new(){
+
+
+Status squeue_push(SortedQueue *q, void *elem, compare_elem_fn cmp) {
+    Queue *tempQueue = NULL;
+    if (q == NULL || elem == NULL) {
+        return ERROR; 
+    }
+
+    if (squeue_isEmpty(q)) {
+        queue_push(q, elem);
+        return OK;
+    }
+
+    tempQueue = queue_new();
+    if (tempQueue == NULL) {
+        return ERROR; 
+    }
+
+    while (!squeue_isEmpty(q) && cmp(queue_getFront(q), elem) < 0) {
+        if(queue_push(tempQueue, queue_pop(q)) == ERROR){
+            queue_free(tempQueue);
+            return ERROR;
+        }
+       
+    }
     
-    SortedQueue *p = queue_new();
-    if(!p){
-        return NULL;
+    queue_push(tempQueue, elem);
+
+    while (!squeue_isEmpty(q)) {
+        if(queue_push(tempQueue, queue_pop(q)) == ERROR){
+            queue_free(tempQueue);
+            return ERROR;
+        }
     }
 
-    return p;
-}
+    while (!squeue_isEmpty(tempQueue)) {
+       if(queue_push(q, queue_pop(tempQueue)) == ERROR){
+            queue_free(tempQueue);
+            return ERROR;
+        }
+    }
 
-void squeue_free(SortedQueue *q){
+    queue_free(tempQueue);
     
-    if(!q) return;
-
-    queue_free(q);
-}
-
-bool squeue_isEmpty(const SortedQueue *q){
-    
-    if(!q){
-        return false;
-    }
-
-    return queue_isEmpty(q);
-}
-
-Status squeue_push(SortedQueue *q, void *elem, compare_elem_fn cmp){
-    if (!q) {
-        return ERROR;
-    }
-
-    while (!queue_isEmpty(q) && cmp(queue_getFront(q), elem) < 0) {
-        void *front_elem = queue_pop(q);
-        queue_push(q, front_elem);
-    }
-
-    queue_push(q, elem);
-    
-    while (!queue_isEmpty(q) && cmp(queue_getFront(q), elem) >= 0) {
-        void *front_elem = queue_pop(q);
-        queue_push(q, front_elem);
-    }
 
     return OK;
 }
 
+    
+SortedQueue *squeue_new(){
+    return queue_new();
+}
+void squeue_free(SortedQueue *q){
+    queue_free(q);
+    return;
+}
+bool squeue_isEmpty(const SortedQueue *q){
+    return queue_isEmpty(q);
+}
 void *squeue_pop(SortedQueue *q){
-    void *elem;
-    if(!q || squeue_isEmpty(q)==true){
-        return NULL;
-    }
-
-    elem = queue_pop(q);
-
-    return elem;
+    return queue_pop(q);
 }
-
 void *squeue_getFront(const SortedQueue *q){
-    void *elem;
-    if(!q) return NULL;
-
-    elem = queue_getFront(q);
-    return elem;
+    return queue_getFront(q);
 }
-
 void *squeue_getBack(const SortedQueue *q){
-    void *elem;
-    if(!q) return NULL;
-
-    elem = queue_getBack(q);
-    return elem;
+    return queue_getBack(q);
 }
-
 size_t squeue_size(const SortedQueue *q){
-    if(!q){
-        return 0;
-    }
-
     return queue_size(q);
 }
-
 int squeue_print(FILE *fp, const SortedQueue *q, print_elem_fn print_elem){
-    if(!q){
-        return 0;
-    }
-
     return queue_print(fp, q, print_elem);
 }
