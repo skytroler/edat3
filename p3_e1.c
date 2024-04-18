@@ -9,89 +9,88 @@
 
 int main(){
 
-    SortedQueue *intQueue = NULL;
-    SortedQueue* stringQueue = NULL;
     SortedQueue *charQueue = NULL;
-    SortedQueue *pointQueue = NULL;
-    int i = 0;
-    int num = 24;
-    char* string= "wow";
-    char newChar = 'c';
-    Point *newPoint = point_new(1, 4, WALL);
-    char charArray[SIZE] = {'e', 'a', 'r', 't', 'h', 'm', 'z', 'j', 's', 'x'};
-    int intArray[SIZE] = {4, 5, 12, 21, 29, 35, 40, 42, 48, 3};
-    char *stringArray[SIZE] = {"hello", "good", "morning", "spain", "it", "is", "very", "hot", "right", "now"};
+    SortedQueue *pointsQueue = NULL;
+    SortedQueue *intsQueue = NULL;
+    SortedQueue* stringsQueue = NULL;
+    
+    int i = 0, num = 57;
+    char* string= "bye";
+    char newChar = 'z';
+    char charArray[SIZE] = {'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y'};
+    int intArray[SIZE] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+    char *stringArray[SIZE] = {"apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon"};
+
+    Point *newPoint = point_new(3, 7, WALL);
     Point *pointArray[SIZE];
     
-    /*INTERGER TEST*/
 
-    printf("Testing SortedQueue with integers:\n");
+    printf("Testing SortedQueue with ints:\n");
 
-    intQueue = squeue_new();
+    intsQueue = squeue_new();
 
-    for (i = 0; i < SIZE; i++) {
-        squeue_push(intQueue, &intArray[i], int_cmp);
+    for (i = 0; i < SIZE; i++) 
+    {
+        squeue_push(intsQueue, &intArray[i], int_cmp);
     }
-    squeue_print(stdout, intQueue, int_print);
-    printf("\nInserting number 24 into the SortedQueue\n");
-    squeue_push(intQueue, &num, int_cmp);
-    squeue_print(stdout, intQueue, int_print);
-    squeue_free(intQueue);
+    squeue_print(stdout, intsQueue, int_print);
 
-
-    /*STRING TEST*/
+    printf("\nInserting 57 into the SortedQueue\n");
+    squeue_push(intsQueue, &num, int_cmp);
+    squeue_print(stdout, intsQueue, int_print);
+    squeue_free(intsQueue);
 
     printf("\nTesting SortedQueue with strings:\n");
-    stringQueue = squeue_new();
-    for (i = 0; i < SIZE; i++) {
-        squeue_push(stringQueue, stringArray[i], string_cmp);
+
+    stringsQueue = squeue_new();
+    for (i = 0; i < SIZE; i++) 
+    {
+        squeue_push(stringsQueue, stringArray[i], string_cmp);
     }
-    squeue_print(stdout, stringQueue, string_print);
-    printf("\nInserting string 'wow' into queue:\n");
-    squeue_push(stringQueue, string, string_cmp);
-    squeue_print(stdout, stringQueue, string_print);
-    squeue_free(stringQueue);
+    squeue_print(stdout, stringsQueue, string_print);
 
+    printf("\nInserting 'bye' into queue:\n");
+    squeue_push(stringsQueue, string, string_cmp);
+    squeue_print(stdout, stringsQueue, string_print);
+    squeue_free(stringsQueue);
 
-    /*CHAR TEST*/
+    printf("\nTesting SortedQueue with chars:\n");
 
-    printf("\nTesting SortedQueue with characters:\n");
     charQueue = squeue_new();
     for (i = 0; i < SIZE; i++) {
         squeue_push(charQueue, &charArray[i], char_cmp);
     }
     squeue_print(stdout, charQueue, char_print);
-    printf("\nInserting character 'c' into queue:\n");
+
+    printf("\nInserting 'z' into queue:\n");
     squeue_push(charQueue, &newChar, char_cmp);
     squeue_print(stdout, charQueue, char_print);
     squeue_free(charQueue);
 
-
-    /*POINT TEST*/
-
     printf("\nTesting SortedQueue with Points:\n");
-    pointQueue = squeue_new();
-    pointArray[0] = point_new(1, 2, WALL);
-    pointArray[1] = point_new(2, 1, IN);
-    pointArray[2] = point_new(4, 3, SPACE);
-    pointArray[3] = point_new(2, 3, IN);
-    pointArray[4] = point_new(1, 5, WALL);
-    pointArray[5] = point_new(4, 2, WALL);
-    pointArray[6] = point_new(8, 3, IN);
-    pointArray[7] = point_new(6, 4, WALL);
-    pointArray[8] = point_new(12, 3, SPACE);
-    pointArray[9] = point_new(21, 5, WALL);
 
-    for (i = 0; i < SIZE; i++) {
-        squeue_push(pointQueue, pointArray[i], point_cmp);
+    pointArray[0] = point_new(5, 3, WALL);
+    pointArray[1] = point_new(3, 1, IN);
+    pointArray[2] = point_new(7, 5, SPACE);
+    pointArray[3] = point_new(8, 4, IN);
+    pointArray[4] = point_new(2, 5, WALL);
+    pointArray[5] = point_new(4, 6, WALL);
+    pointArray[6] = point_new(6, 2, IN);
+    pointArray[7] = point_new(1, 2, WALL);
+    pointArray[8] = point_new(4, 3, SPACE);
+    pointArray[9] = point_new(3, 7, WALL);
+
+    for (i = 0; i < SIZE; i++) 
+    {
+        squeue_push(pointsQueue, pointArray[i], point_cmp);
     }
-    squeue_print(stdout, pointQueue, point_print);
-    printf("\nInserting a new Point [(1,4): +] into queue:\n");
-    squeue_push(pointQueue, newPoint, point_cmp);
-    squeue_print(stdout, pointQueue, point_print);
-    squeue_free(pointQueue);
 
-
+    squeue_print(stdout, pointsQueue, point_print);
+    
+    printf("\nInserting Point [(3,7): +] into queue:\n");
+    squeue_push(pointsQueue, newPoint, point_cmp);
+    squeue_print(stdout, pointsQueue, point_print);
+    squeue_free(pointsQueue);
     
     return 0;
 }

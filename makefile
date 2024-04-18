@@ -1,25 +1,25 @@
+CC = gcc
 CFLAGS = -Wall -pedantic -ansi -g
-CC=gcc
-CLIB=-L -lqueue
-LIBS= -lm
-EXES= p3_e1 p3_e2 
-OBJS= maze.o p3_e1.o p3_e2 
-
-
-
+LIBS = -lm
+EXES = p3_e1 p3_e2 p3_e1s p3_e2s
+OBJS = maze.o p3_e1.o p3_e2.o queue.o list.o
 
 all: $(EXES)
 
-#######################################################
+p3_e1: p3_e1.o maze.o elements.o sorted_queue.o libqueue.a
+	$(CC) -o $@ $^ $(LIBS)
 
-p3_e1: p3_e1.o maze.o elements.o sorted_queue.o queue.h libqueue.a
+p3_e2: p3_e2.o maze.o elements.o sorted_queue.o libqueue.a search.o libstack.a
+	$(CC) -o $@ $^ $(LIBS)
+
+p3_e1s: p3_e1.o maze.o elements.o sorted_queue.o queue.o list.o
+	$(CC) -o $@ $^ $(LIBS)
+
+p3_e2s: p3_e2.o maze.o elements.o sorted_queue.o queue.o list.o search.o libstack.a
 	$(CC) -o $@ $^ $(LIBS)
 
 p3_e1.o: p3_e1.c elements.h maze.h
 	$(CC) $(CFLAGS) -c $<
-
-p3_e2: p3_e2.o maze.o elements.o sorted_queue.o queue.h libqueue.a search.o libstack.a
-	$(CC) -o $@ $^ $(LIBS)
 
 p3_e2.o: p3_e2.c elements.h maze.h search.h
 	$(CC) $(CFLAGS) -c $<
@@ -36,18 +36,18 @@ elements.o: elements.c maze.h types.h elements.h
 sorted_queue.o: sorted_queue.c elements.h types.h sorted_queue.h queue.h
 	$(CC) $(CFLAGS) -c $<
 
-queue.o: queue_list.c elements.h types.h queue.h list.h
+queue.o: queue.c elements.h types.h queue.h list.h
 	$(CC) $(CFLAGS) -c $<
 
-#######################################################
+list.o: list.c elements.h types.h list.h
+	$(CC) $(CFLAGS) -c $<
 
 clean_objects:
-	@echo "Cleaning objects..."
-	@rm -f *.o
+	@echo "Cleaning objects..." 
+	@rm -f *.o $<
 
 clean_program:
 	@echo "Cleaning program..."
 	@rm -f $(EXES)
-	
-	
+
 clean: clean_objects clean_program
