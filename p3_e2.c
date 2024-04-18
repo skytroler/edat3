@@ -5,9 +5,7 @@
 
 int main(int argc, char *argv[]) {
     Maze *maze;
-    Point *result;
-
-
+    
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <maze_file>\n", argv[0]);
         return EXIT_FAILURE;
@@ -21,18 +19,11 @@ int main(int argc, char *argv[]) {
 
     printf("Reading maze from file %s\n", argv[1]);
     printf("Maze: %d rows %d columns\n", maze_getNrows(maze), maze_getNcols(maze));
-    maze_printPoints(stdout, maze);
+    maze_print(stdout, maze);
 
-    printf("\nBreadth First Search (BFS):\n");
-    result = maze_bfs(maze);
-
-    if (result != NULL) {
-        printf("\nA path from entry point to exit point has been found!\n");
-        printf("Found path:\n");
-        maze_print(stdout, maze);
-    } else {
-        printf("\nNo path from entry point to exit point found.\n");
-    }
+    printf("\nBFS:\n");
+    maze_bfs(maze);
+    printf("\n");
 
     maze_free(maze);
     return EXIT_SUCCESS;

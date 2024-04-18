@@ -386,11 +386,12 @@ int maze_print(FILE *fp, const Maze *maze){
         {   
             if(point_getSymbol(maze_getPoint(maze, i, j))==IN||point_getSymbol(maze_getPoint(maze, i, j))==OUT){
                 point_print(fp, maze_getPoint(maze, i, j));
-                fprintf(fp, "\n");
+                fprintf(fp, " ");
             }
         }
         
     }
+    printf("\n");
     for ( i = 0; i < maze_getNrows(maze); i++)
     {
         for ( j = 0; j < maze_getNcols(maze); j++)
