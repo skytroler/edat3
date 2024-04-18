@@ -18,7 +18,7 @@ p3_e1: p3_e1.o maze.o elements.o sorted_queue.o queue.h libqueue.a
 p3_e1.o: p3_e1.c elements.h maze.h
 	$(CC) $(CFLAGS) -c $<
 
-p3_e2: p3_e2.o maze.o elements.o sorted_queue.o queue.h libqueue.a search.o
+p3_e2: p3_e2.o maze.o elements.o sorted_queue.o queue.h libqueue.a search.o libstack.a
 	$(CC) -o $@ $^ $(LIBS)
 
 p3_e2.o: p3_e2.c elements.h maze.h search.h
