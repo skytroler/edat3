@@ -12,16 +12,22 @@ p3_e1: p3_e1.o maze.o elements.o sorted_queue.o libqueue.a
 p3_e2: p3_e2.o maze.o elements.o sorted_queue.o libqueue.a search.o libstack.a
 	$(CC) -o $@ $^ $(LIBS)
 
-p3_e1s: p3_e1.o maze.o elements.o sorted_queue.o queue.h queue_list.c list.o
+p3_e1s: p3_e1s.o maze.o elements.o sorted_queue.o queue.h queue_list.c list.o
 	$(CC) -o $@ $^ $(LIBS)
 
-p3_e2s: p3_e2.o maze.o elements.o sorted_queue.o queue.h queue_list.c list.o search.o libstack.a
+p3_e2s: p3_e2s.o maze.o elements.o sorted_queue.o queue.h queue_list.c list.o search.o libstack.a
 	$(CC) -o $@ $^ $(LIBS)
 
 p3_e1.o: p3_e1.c elements.h maze.h
 	$(CC) $(CFLAGS) -c $<
 
 p3_e2.o: p3_e2.c elements.h maze.h search.h
+	$(CC) $(CFLAGS) -c $<
+
+p3_e1s.o: p3_e1s.c elements.h maze.h
+	$(CC) $(CFLAGS) -c $<
+
+p3_e2s.o: p3_e2s.c elements.h maze.h search.h
 	$(CC) $(CFLAGS) -c $<
 
 maze.o: maze.c maze.h types.h
