@@ -11,4 +11,12 @@
  */
 Point *maze_dfs(Maze *m);
 
+/**
+ * @brief Perform Breath-First Search (DFS) on the maze.
+ * 
+ * @param m Pointer to the maze.
+ * @return Pointer to the exit point if path exists, NULL otherwise.
+ */
+Point *maze_bfs(Maze *m);
+
 #endif /* SEARCH_H */

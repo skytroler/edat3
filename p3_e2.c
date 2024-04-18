@@ -4,40 +4,36 @@
 #include "search.h"
 
 int main(int argc, char *argv[]) {
+    Maze *maze;
+    Point *result;
+
+
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <maze_file>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    FILE *file = fopen(argv[1], "r");
-    if (file == NULL) {
-        perror("Error opening file");
-        return EXIT_FAILURE;
-    }
-
-    Maze *maze = maze_read(file);
-    fclose(file);
-
+    maze = maze_readFromFile(argv[1]);
     if (maze == NULL) {
-        fprintf(stderr, "Error reading maze from file\n");
+        fprintf(stderr, "Error reading maze from file %s\n", argv[1]);
         return EXIT_FAILURE;
     }
 
-    printf("Reading maze from %s\n", argv[1]);
-    printf("Maze: %d rows %d cols\n", maze_rows(maze), maze_cols(maze));
-    maze_print(stdout,maze);
+    printf("Reading maze from file %s\n", argv[1]);
+    printf("Maze: %d rows %d columns\n", maze_getNrows(maze), maze_getNcols(maze));
+    maze_printPoints(stdout, maze);
 
-    printf("BFS:\n");
-    Point *exit_point = maze_bfs(maze);
+    printf("\nBreadth First Search (BFS):\n");
+    result = maze_bfs(maze);
 
-    if (exit_point != NULL) {
-        printf("Exit found at (%d, %d)\n", point_get_row(exit_point), point_get_col(exit_point));
-        point_destroy(exit_point);
+    if (result != NULL) {
+        printf("\nA path from entry point to exit point has been found!\n");
+        printf("Found path:\n");
+        maze_print(stdout, maze);
     } else {
-        printf("No exit found.\n");
+        printf("\nNo path from entry point to exit point found.\n");
     }
 
-    maze_destroy(maze);
-
+    maze_free(maze);
     return EXIT_SUCCESS;
 }
